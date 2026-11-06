@@ -5,14 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Grok Bot Office</title>
 <meta name="description" content="Watch your Grok Bots at work in a cozy little office, and talk to them.">
-<meta name="theme-color" content="#f3e6d3">
+<meta name="theme-color" content="#f4efe3">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- The drawn look of every panel: edges wobble like a pen line, and a pen-hatched
+       shadow sits down and to the right instead of a solid one. -->
+  <filter id="drawn" x="-6%" y="-10%" width="116%" height="130%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="2" seed="4" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="wobbly"/>
+    <feImage href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='5'%3E%3Cpath d='M-1 6 L6 -1 M-1 1 L1 -1 M4 6 L6 4' stroke='%232b2622' stroke-width='0.9' stroke-opacity='0.75'/%3E%3C/svg%3E" x="0" y="0" width="5" height="5" result="tile"/>
+    <feTile in="tile" result="hatch"/>
+    <feOffset in="SourceAlpha" dx="4" dy="4" result="offset"/>
+    <feComposite in="hatch" in2="offset" operator="in" result="shadow"/>
+    <feMerge><feMergeNode in="shadow"/><feMergeNode in="wobbly"/></feMerge>
+  </filter>
+</svg>
 <div class="view" id="view">
   <canvas id="stage" aria-label="An office of little rooms seen from above, one room per Grok Bot."></canvas>
   <div class="layer" id="layer"></div>

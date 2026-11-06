@@ -250,13 +250,16 @@ export const iso = (i: number, j: number, z: number): Vec => [isoX(i, j), isoY(i
 // ===========================================================================
 // THE INKS
 // ===========================================================================
-export const PAPER: [number, number, number] = [243, 235, 221]
+// A warm cream sheet and soft inks, like a hand-coloured ink drawing: 'blue' is the
+// pen (a warm slate that reads as ink at full tone, a dusty blue when light),
+// coral a terracotta, sun a mustard, teal a sage.
+export const PAPER: [number, number, number] = [244, 239, 227]
 export const INK: Record<InkName, [number, number, number]> = {
-  blue: [52, 74, 128],
-  coral: [238, 104, 82],
-  sun: [255, 212, 40],
-  teal: [0, 140, 138],
-  black: [36, 34, 38],
+  blue: [58, 62, 78],
+  coral: [214, 116, 86],
+  sun: [234, 184, 86],
+  teal: [96, 146, 128],
+  black: [43, 38, 34],
   paper: PAPER,
 }
 export const INK_NAMES = ['blue', 'coral', 'sun', 'teal', 'black', 'paper'] as const
@@ -570,7 +573,7 @@ export function mkHand(cx: CanvasRenderingContext2D, o: { ox?: number; oy?: numb
       const src = o2.closed ? pts.concat([pts[0]]) : pts
       const rs = resample(src, Math.max(2.5, w * 1.4))
       if (rs.length < 2) return
-      const amp = o2.amp ?? Math.min(0.6, w * 0.15 + 0.15)
+      const amp = o2.amp ?? Math.min(0.9, w * 0.22 + 0.25)
       const q = amp > 0 ? H.wob(rs, amp) : rs
       const tone = o2.tone ?? 1
       const taper = o2.taper

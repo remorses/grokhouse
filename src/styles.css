@@ -1,22 +1,27 @@
-/* Grok Bot Office: a cozy toon look. Cream paper, warm wood, thick dark outlines and
-   hard offset shadows like stickers; everything pops in with a little overshoot. */
+/* Grok Bot Office: a hand-drawn look, like an ink drawing on warm cream paper.
+   Typewriter type, thin wobbly ink outlines (the #drawn SVG filter in index.html) and
+   pen-hatched shadows instead of solid ones; wooden signs, paper notes with tape. */
 :root {
-  --paper: #f3e6d3;
-  --paper-2: #fbf5ea;
-  --ink: #2a2228;
-  --ink-soft: #6b5a5e;
-  --coral: #ee6852;
-  --sun: #ffd23f;
-  --teal: #1f9e94;
+  --paper: #f4efe3;
+  --paper-2: #faf7ef;
+  --card: #fcfaf4;
+  --note: #f7ecc9;
+  --rose: #f6e1d6;
+  --ink: #2b2622;
+  --ink-soft: #6e655c;
+  --coral: #d97757;
+  --sun: #e8b654;
+  --teal: #6a9a86;
   --plum: #8c5a8f;
-  --wood: #e3ad6c;
-  --wood-dark: #b97a3d;
-  --line: 1.5px solid var(--ink);
-  --shadow: 2px 2px 0 var(--ink);
+  --wood: #dcb27a;
+  --wood-dark: #a9794b;
+  --line: 1.4px solid var(--ink);
+  --shadow: none;
+  --drawn: url(#drawn);
   --pop: cubic-bezier(0.34, 1.56, 0.64, 1);
   --spring: cubic-bezier(0.22, 1.4, 0.36, 1);
-  --ui: 'Fredoka', ui-rounded, system-ui, sans-serif;
-  --hand: 'Patrick Hand', 'Comic Sans MS', ui-rounded, cursive;
+  --ui: 'Courier Prime', 'Courier New', ui-monospace, monospace;
+  --hand: 'Courier Prime', 'Courier New', ui-monospace, monospace;
 }
 * {
   box-sizing: border-box;
@@ -34,7 +39,7 @@ body {
 /* Thin, quiet scrollbars everywhere: a soft thumb, no track. */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(42, 34, 40, 0.22) transparent;
+  scrollbar-color: rgba(43, 38, 34, 0.22) transparent;
 }
 ::-webkit-scrollbar {
   width: 6px;
@@ -44,11 +49,11 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(42, 34, 40, 0.22);
+  background: rgba(43, 38, 34, 0.22);
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(42, 34, 40, 0.4);
+  background: rgba(43, 38, 34, 0.4);
 }
 button,
 input,
@@ -61,8 +66,8 @@ textarea {
   inset: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 1px 1px, rgba(140, 90, 70, 0.13) 1.2px, transparent 1.4px) 0 0 / 22px 22px,
-    radial-gradient(ellipse at 50% 40%, #f8eedf 0%, var(--paper) 55%, #ead6bd 100%);
+    url('/paper.svg') 0 0 / 360px 360px,
+    radial-gradient(ellipse at 50% 40%, #f8f4ea 0%, var(--paper) 60%, #eae2d0 100%);
 }
 #stage {
   position: absolute;
@@ -94,9 +99,9 @@ textarea {
   align-items: center;
   gap: 6px;
   border: var(--line);
-  border-radius: 12px;
+  border-radius: 4px;
   background: var(--paper-2);
-  box-shadow: 1px 2px 0 var(--ink);
+  box-shadow: none;
   padding: 6px 12px;
   font-weight: 600;
   font-size: 14px;
@@ -108,15 +113,15 @@ textarea {
 }
 .btn:hover {
   transform: translate(-1px, -2px) rotate(-1deg);
-  box-shadow: 2px 3px 0 var(--ink);
+  box-shadow: none;
 }
 .btn:active {
   transform: translate(2px, 3px);
-  box-shadow: 0 0 0 var(--ink);
+  box-shadow: none;
 }
 .btn.primary {
   background: var(--coral);
-  color: #fff;
+  color: var(--card);
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
 }
 .btn.sun {
@@ -143,7 +148,7 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  border-radius: 999px;
+  border-radius: 3px;
   padding: 1px 9px 1px 7px;
   font-size: 12px;
   font-weight: 600;
@@ -156,7 +161,7 @@ textarea {
   height: 9px;
   border-radius: 50%;
   border: 1.5px solid var(--ink);
-  background: #c9b9a6;
+  background: #cfc4b2;
   flex: none;
 }
 .is-work .dot,
@@ -176,7 +181,7 @@ textarea {
 }
 .is-idle .dot,
 .dot.idle {
-  background: #9fd3a8;
+  background: #a9c9a4;
 }
 @keyframes beat {
   50% {
@@ -212,15 +217,15 @@ textarea {
   gap: 12px;
   background: var(--paper-2);
   border: var(--line);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
+  border-radius: 4px;
+  box-shadow: none;
   padding: 8px 16px 8px 8px;
   transform: rotate(-1.2deg);
 }
 .brand canvas {
   width: 46px;
   height: 46px;
-  border-radius: 12px;
+  border-radius: 4px;
   background: var(--sun);
   border: 1.5px solid var(--ink);
 }
@@ -255,8 +260,8 @@ textarea {
   width: min(380px, calc(100vw - 28px));
   background: var(--paper-2);
   border: var(--line);
-  border-radius: 22px;
-  box-shadow: 3px 3px 0 var(--ink);
+  border-radius: 4px;
+  box-shadow: none;
   padding: 18px 20px 16px;
   z-index: 6;
   animation: pop-in 0.6s var(--pop) both;
@@ -312,8 +317,8 @@ textarea {
   position: relative;
   background: linear-gradient(180deg, #f0c48a, var(--wood));
   border: var(--line);
-  border-radius: 10px;
-  box-shadow: 0 3px 0 var(--wood-dark), 0 3px 0 1.5px var(--ink);
+  border-radius: 4px;
+  box-shadow: none;
   padding: 3px 14px 4px;
   font-weight: 700;
   font-size: 17px;
@@ -359,7 +364,7 @@ textarea {
   max-width: 230px;
 }
 .plaque .sched {
-  background: #fff3c4;
+  background: var(--note);
 }
 
 /* ---------------- speech bubbles ---------------- */
@@ -370,10 +375,10 @@ textarea {
   width: max-content;
   max-width: 270px;
   min-width: 150px;
-  background: #fff;
+  background: var(--card);
   border: 1.5px solid var(--ink);
-  border-radius: 20px 20px 20px 20px;
-  box-shadow: 2px 2px 0 rgba(42, 34, 40, 0.85);
+  border-radius: 4px;
+  box-shadow: none;
   padding: 9px 14px 10px;
   font-family: var(--hand);
   font-size: 17px;
@@ -398,7 +403,7 @@ textarea {
   bottom: -15px;
   width: 22px;
   height: 18px;
-  background: #fff;
+  background: var(--card);
   border-left: 1.5px solid var(--ink);
   border-bottom: 1.5px solid var(--ink);
   border-bottom-left-radius: 4px;
@@ -407,16 +412,16 @@ textarea {
   clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 .bubble.is-mine {
-  background: #fff6c9;
+  background: var(--note);
 }
 .bubble.is-mine::after {
-  background: #fff6c9;
+  background: var(--note);
 }
 .bubble.is-card {
-  background: #ffe9e2;
+  background: var(--rose);
 }
 .bubble.is-card::after {
-  background: #ffe9e2;
+  background: var(--rose);
 }
 .bubble .who {
   font-family: var(--ui);
@@ -448,7 +453,7 @@ textarea {
 .bubble .text code {
   font-family: ui-monospace, monospace;
   font-size: 0.82em;
-  background: #f3ece2;
+  background: #efe7d6;
   border-radius: 4px;
   padding: 0 3px;
 }
@@ -461,7 +466,7 @@ textarea {
   border-radius: 50%;
   border: 1.5px solid var(--ink);
   background: var(--coral);
-  color: #fff;
+  color: var(--card);
   font-family: var(--ui);
   font-weight: 700;
   font-size: 14px;
@@ -469,7 +474,7 @@ textarea {
   cursor: pointer;
   display: grid;
   place-items: center;
-  box-shadow: 1px 2px 0 var(--ink);
+  box-shadow: none;
   transition: transform 0.2s var(--pop);
 }
 .bubble .close:hover {
@@ -500,7 +505,7 @@ textarea {
   flex: 1;
   min-width: 0;
   border: 1.5px solid var(--ink);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 4px 9px;
   font-family: var(--hand);
   font-size: 16px;
@@ -509,13 +514,13 @@ textarea {
   transition: box-shadow 0.15s;
 }
 .bubble input:focus {
-  box-shadow: 0 0 0 3px #ffd23f88;
+  box-shadow: 0 0 0 3px #e8b65466;
 }
 .bubble form .btn {
   padding: 3px 10px;
-  border-radius: 10px;
+  border-radius: 4px;
   font-size: 13px;
-  box-shadow: 1px 2px 0 var(--ink);
+  box-shadow: none;
 }
 .bubble .choices {
   display: flex;
@@ -540,14 +545,14 @@ textarea {
   width: 30px;
   height: 24px;
   border: 1.5px solid var(--ink);
-  border-radius: 12px 12px 12px 4px;
-  background: #fff;
+  border-radius: 4px;
+  background: var(--card);
   display: grid;
   place-items: center;
   font-weight: 700;
   font-size: 13px;
   cursor: pointer;
-  box-shadow: 1px 2px 0 var(--ink);
+  box-shadow: none;
   transition: transform 0.2s var(--pop);
 }
 .nub:hover {
@@ -571,8 +576,8 @@ textarea {
   overflow-x: auto;
   background: var(--paper-2);
   border: var(--line);
-  border-radius: 20px;
-  box-shadow: var(--shadow);
+  border-radius: 4px;
+  box-shadow: none;
   z-index: 5;
   scrollbar-width: none;
 }
@@ -581,7 +586,7 @@ textarea {
   align-items: center;
   gap: 7px;
   border: 2px solid transparent;
-  border-radius: 14px;
+  border-radius: 4px;
   padding: 3px 10px 3px 4px;
   background: transparent;
   cursor: pointer;
@@ -592,11 +597,11 @@ textarea {
 }
 .chip:hover {
   transform: translateY(-3px);
-  background: #f6ead8;
+  background: #efe7d6;
 }
 .chip.is-selected {
   border-color: var(--ink);
-  background: #fff1bf;
+  background: var(--note);
 }
 .chip canvas {
   width: 34px;
@@ -637,8 +642,8 @@ textarea {
   width: min(380px, calc(100vw - 28px));
   background: var(--paper-2);
   border: var(--line);
-  border-radius: 22px;
-  box-shadow: 3px 3px 0 var(--ink);
+  border-radius: 4px;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   z-index: 6;
@@ -659,9 +664,9 @@ textarea {
 .drawer header canvas {
   width: 64px;
   height: 64px;
-  border-radius: 16px;
+  border-radius: 4px;
   border: 1.5px solid var(--ink);
-  background: #fff1bf;
+  background: var(--note);
   flex: none;
 }
 .drawer h2 {
@@ -706,9 +711,9 @@ textarea {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #fff;
+  background: var(--card);
   border: 1.5px solid var(--ink);
-  border-radius: 14px;
+  border-radius: 4px;
   padding: 8px 10px;
 }
 .now .what {
@@ -726,9 +731,9 @@ textarea {
   white-space: nowrap;
 }
 .card {
-  background: #fff;
+  background: var(--card);
   border: 1.5px solid var(--ink);
-  border-radius: 14px;
+  border-radius: 4px;
   padding: 8px 10px;
   margin-bottom: 6px;
   font-size: 14px;
@@ -764,7 +769,7 @@ textarea {
   font-weight: 700;
 }
 .todo.done .box {
-  background: #9fd3a8;
+  background: #a9c9a4;
 }
 .todo.doing .box {
   background: var(--sun);
@@ -781,17 +786,17 @@ textarea {
 .msg {
   max-width: 92%;
   border: 1.5px solid var(--ink);
-  border-radius: 14px;
+  border-radius: 4px;
   padding: 5px 10px 6px;
   font-family: var(--hand);
   font-size: 16px;
   line-height: 1.2;
-  background: #fff;
+  background: var(--card);
   overflow-wrap: anywhere;
 }
 .msg.user {
   align-self: flex-end;
-  background: #fff1bf;
+  background: var(--note);
   border-bottom-right-radius: 4px;
 }
 .msg.bot {
@@ -834,17 +839,17 @@ textarea {
   flex: 1;
   resize: none;
   border: 1.5px solid var(--ink);
-  border-radius: 14px;
+  border-radius: 4px;
   padding: 7px 10px;
   font-family: var(--hand);
-  font-size: 17px;
+  font-size: 14px;
   min-height: 40px;
   max-height: 120px;
-  background: #fff;
+  background: var(--card);
   outline: none;
 }
 .composer textarea:focus {
-  box-shadow: 0 0 0 3px #ffd23f88;
+  box-shadow: 0 0 0 3px #e8b65466;
 }
 
 /* ---------------- toasts ---------------- */
@@ -862,12 +867,12 @@ textarea {
 }
 .toast {
   background: var(--ink);
-  color: #fff;
-  border-radius: 14px;
+  color: var(--card);
+  border-radius: 4px;
   padding: 7px 14px;
   font-size: 14px;
   font-weight: 500;
-  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: none;
   animation: pop-in 0.45s var(--pop) both;
   --from: translateY(16px) scale(0.8);
   max-width: min(520px, 92vw);
@@ -928,8 +933,8 @@ textarea {
 .bubble .who .new {
   margin-left: auto;
   background: var(--coral);
-  color: #fff;
-  border-radius: 999px;
+  color: var(--card);
+  border-radius: 3px;
   padding: 0 7px;
   font-size: 10.5px;
   line-height: 16px;
@@ -947,4 +952,87 @@ textarea {
   border-radius: 50%;
   background: var(--coral);
   border: 1.5px solid var(--paper-2);
+}
+
+/* ---------------- drawn ---------------- */
+/* Every panel gets wobbly ink edges and a hatched shadow from one SVG filter. */
+.btn:not(.ghost),
+.brand,
+.signin,
+.plaque .board,
+.bubble,
+.nub,
+.strip,
+.drawer,
+.toast {
+  filter: var(--drawn);
+}
+.brand h1,
+.drawer h2,
+.signin h2 {
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+.brand p,
+.bubble .who,
+.drawer header p,
+.msg time,
+.empty,
+.note {
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+/* Wooden signs: planks with grain lines and four nails. */
+.plaque .board {
+  background:
+    radial-gradient(circle at 7px 7px, var(--ink) 1.3px, transparent 1.6px),
+    radial-gradient(circle at calc(100% - 7px) 7px, var(--ink) 1.3px, transparent 1.6px),
+    radial-gradient(circle at 7px calc(100% - 7px), var(--ink) 1.3px, transparent 1.6px),
+    radial-gradient(circle at calc(100% - 7px) calc(100% - 7px), var(--ink) 1.3px, transparent 1.6px),
+    repeating-linear-gradient(180deg, transparent 0 6px, rgba(110, 72, 40, 0.35) 6px 7px),
+    linear-gradient(180deg, #e6c08c, var(--wood));
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  padding: 5px 18px 6px;
+}
+.plaque .board::before,
+.plaque .board::after {
+  display: none;
+}
+.plaque.is-selected .board {
+  background:
+    repeating-linear-gradient(180deg, transparent 0 6px, rgba(110, 72, 40, 0.3) 6px 7px),
+    linear-gradient(180deg, #f2d48f, var(--sun));
+}
+/* Speech bubbles: paper notes held up by a strip of masking tape. */
+.bubble {
+  background: var(--card);
+  font-size: 15px;
+  line-height: 1.3;
+}
+.bubble::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 54px;
+  height: 16px;
+  translate: -50% 0;
+  rotate: -3deg;
+  background: rgba(232, 220, 190, 0.85);
+  border-left: 1px dashed rgba(43, 38, 34, 0.25);
+  border-right: 1px dashed rgba(43, 38, 34, 0.25);
+}
+.bubble .close {
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 400;
+}
+.bubble .who .new {
+  background: var(--coral);
+  font-style: normal;
+}
+.chip .name,
+.btn {
+  font-weight: 700;
 }

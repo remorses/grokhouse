@@ -138,7 +138,7 @@ export function createHud({ layer, topbar, strip, drawer, toasts, viewer, sound,
 
   // ---------------- top bar ----------------
   const brandMascot = el('img', { src: portrait({ shape: 'blob', color: 'black' }, 92), alt: '' })
-  brandMascot.style.cssText = 'width:46px;height:46px;border-radius:12px;background:#ffd23f;border:1.5px solid #2a2228'
+  brandMascot.style.cssText = 'width:46px;height:46px;border-radius:4px;background:var(--sun);border:1.4px solid var(--ink)'
   const brandSub = el('p')
   const brand = el('div', { class: 'brand' }, brandMascot, el('div', {}, el('h1', { textContent: 'Grok Bot Office' }), brandSub))
   const account = el('span', { class: 'account' })

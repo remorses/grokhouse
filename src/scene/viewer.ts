@@ -17,6 +17,27 @@ const MAX_RATIO = 3
 const SCALE = 1.3 // how big a mascot stands in its room
 const FOCUS_MS = 900
 
+// Diagonal pen strokes, one tile repeated: the hatching of drawn shadows.
+const HATCH_PX = 6
+let hatch: { ctx: CanvasRenderingContext2D; pattern: CanvasPattern } | null = null
+function hatchOf(ctx: CanvasRenderingContext2D) {
+  if (hatch?.ctx === ctx) return hatch.pattern
+  const tile = document.createElement('canvas')
+  tile.width = HATCH_PX
+  tile.height = HATCH_PX
+  const t = tile.getContext('2d')!
+  t.strokeStyle = 'rgba(58, 52, 46, 0.32)'
+  t.lineWidth = 1.1
+  t.beginPath()
+  for (const off of [-HATCH_PX, 0, HATCH_PX]) {
+    t.moveTo(off, HATCH_PX)
+    t.lineTo(off + HATCH_PX, 0)
+  }
+  t.stroke()
+  hatch = { ctx, pattern: ctx.createPattern(tile, 'repeat')! }
+  return hatch.pattern
+}
+
 type RoomEntry = {
   plan: RoomPlan
   ox: number
@@ -190,9 +211,9 @@ export function createViewer({ view, stage, onPick }: { view: HTMLElement; stage
     const now = performance.now()
     for (const R of list) {
       if (!roomInView(R)) continue
-      // A soft drop shadow under the room's card.
+      // A pen-hatched drop shadow under the room's card, like the shadows of an ink drawing.
       ctx.save()
-      ctx.fillStyle = 'rgba(120, 80, 60, 0.13)'
+      ctx.fillStyle = hatchOf(ctx)
       ctx.beginPath()
       const corners = [iso(0, 0, 0), iso(9, 0, 0), iso(9, 9, 0), iso(0, 9, 0)].map(([x, y]) => [devX(R.ox + x + 14), devY(R.oy + y + 22)])
       corners.forEach(([x, y], n) => (n ? ctx.lineTo(x, y) : ctx.moveTo(x, y)))
