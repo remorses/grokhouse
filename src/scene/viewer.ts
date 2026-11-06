@@ -43,7 +43,8 @@ export function createViewer({ view, stage, onPick }: { view: HTMLElement; stage
   let lastT = 0
   let raf = 0
   const cam = { x: 0, y: 0, z: 1 }
-  let tween: { x0: number; y0: number; z0: number; x1: number; y1: number; z1: number; t0: number; d: number } | null = null
+  // `glide`: slow ease in-out with zoom moving evenly in log space, for long camera moves.
+  let tween: { x0: number; y0: number; z0: number; x1: number; y1: number; z1: number; t0: number; d: number; glide?: boolean } | null = null
   let userCam = false
   const frameListeners: Array<() => void> = []
 
@@ -355,12 +356,19 @@ export function createViewer({ view, stage, onPick }: { view: HTMLElement; stage
     clock += dt
     if (tween) {
       const u = Math.min(1, (clock - tween.t0) / tween.d)
-      // Ease out back: a little overshoot, like the camera is on a spring.
-      const c1 = 1.2
-      const e = 1 + (c1 + 1) * Math.pow(u - 1, 3) + c1 * Math.pow(u - 1, 2)
-      cam.x = lerp(tween.x0, tween.x1, e)
-      cam.y = lerp(tween.y0, tween.y1, e)
-      setZoom(lerp(tween.z0, tween.z1, clamp(e, 0, 1.05)))
+      if (tween.glide) {
+        const e = u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2
+        cam.x = lerp(tween.x0, tween.x1, e)
+        cam.y = lerp(tween.y0, tween.y1, e)
+        setZoom(Math.exp(lerp(Math.log(tween.z0), Math.log(tween.z1), e)))
+      } else {
+        // Ease out back: a little overshoot, like the camera is on a spring.
+        const c1 = 1.2
+        const e = 1 + (c1 + 1) * Math.pow(u - 1, 3) + c1 * Math.pow(u - 1, 2)
+        cam.x = lerp(tween.x0, tween.x1, e)
+        cam.y = lerp(tween.y0, tween.y1, e)
+        setZoom(lerp(tween.z0, tween.z1, clamp(e, 0, 1.05)))
+      }
       if (u >= 1) tween = null
     }
     const wall = performance.now()
@@ -431,6 +439,16 @@ export function createViewer({ view, stage, onPick }: { view: HTMLElement; stage
     },
     zoomBy(stepBy: number) {
       zoomBy(stepBy)
+    },
+    // A slow camera move to a room (or the whole office when no bot), at zoom `z`.
+    // `dx`/`dy` shift the target in world px.
+    glideTo({ botId, z, ms, dx = 0, dy = 0 }: { botId?: string; z?: number; ms: number; dx?: number; dy?: number }) {
+      const R = botId ? rooms.get(botId) : null
+      const b = worldBounds()
+      const x = R ? R.ox + (R.b.x0 + R.b.x1) / 2 : (b.x0 + b.x1) / 2
+      const y = R ? R.oy + (R.b.y0 + R.b.y1) / 2 : (b.y0 + b.y1) / 2 + 30
+      userCam = true
+      tween = { x0: cam.x, y0: cam.y, z0: cam.z, x1: x + dx, y1: y + dy, z1: z ?? (R ? cam.z : fitZoom(b)), t0: clock, d: ms / 1000, glide: true }
     },
     start() {
       ro.observe(view)

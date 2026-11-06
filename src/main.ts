@@ -323,7 +323,7 @@ async function main() {
   else await startLive()
   // Moods and "2m ago" labels move with the clock; refresh them once a second.
   window.setInterval(render, 1000)
-  window.__office = { store, events: log.events, viewer: viewer.debug }
+  window.__office = { store, events: log.events, viewer: viewer.debug, glideTo: viewer.glideTo }
 }
 
 void main()
