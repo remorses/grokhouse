@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grok Bot Office</title>
+<meta name="description" content="Watch your Grok Bots at work in a cozy little office, and talk to them.">
+<meta name="theme-color" content="#f3e6d3">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="view" id="view">
+  <canvas id="stage" aria-label="An office of little rooms seen from above, one room per Grok Bot."></canvas>
+  <div class="layer" id="layer"></div>
+</div>
+<header class="topbar" id="topbar"></header>
+<nav class="strip" id="strip" aria-label="Bots"></nav>
+<aside class="drawer" id="drawer" aria-label="Bot details"></aside>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

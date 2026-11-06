@@ -1,0 +1,25 @@
+{
+  "name": "grok-bot-office",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "tsc -p . && tsc -p worker && vite build",
+    "typecheck": "tsc -p . && tsc -p worker",
+    "types": "wrangler types",
+    "deploy": "pnpm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.67.0",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0",
+    "wrangler": "^4.158.0"
+  },
+  "dependencies": {
+    "errore": "^0.14.1",
+    "zustand": "^5.0.16"
+  }
+}
