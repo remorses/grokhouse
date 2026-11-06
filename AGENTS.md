@@ -1,6 +1,6 @@
 # grok-bot-office
 
-A website that shows a signed-in user's Grok Bots as mascots in an isometric office, one room per bot, and lets them reply to bots from comic speech bubbles. Vite page + a Cloudflare Worker for `/api/*`. No framework.
+https://grokhouse.dev is a website that shows a signed-in user's Grok Bots as mascots in an isometric office, one room per bot, and lets them reply to bots from comic speech bubbles. Vite page + a Cloudflare Worker for `/api/*`. No framework.
 
 ## architecture
 

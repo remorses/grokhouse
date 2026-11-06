@@ -1,6 +1,6 @@
 # Grok Bot Office
 
-Watch your **Grok Bots** at work in a cozy little isometric office, and talk to them.
+Watch your **Grok Bots** at work in a cozy little isometric office, and talk to them. Live at [grokhouse.dev](https://grokhouse.dev).
 
 Every bot gets its own room. Busy bots hop between their desks, idle ones potter about, and the rest nap in bed. A bot's last message pops up as a comic speech bubble: close it with the ✕, or type in it to send the bot a prompt.
 
@@ -10,7 +10,7 @@ pnpm dev            # http://localhost:5173, the Worker runs inside Vite
 pnpm run build      # tsc for page and Worker, then vite build
 ```
 
-Signed out, the page shows a demo office. Open `/?demo` to see it while signed in.
+Signed out, the page shows a demo office ([grokhouse.dev](https://grokhouse.dev)). Open [`/?demo`](https://grokhouse.dev/?demo) to see it while signed in.
 
 ## What it shows
 
@@ -59,5 +59,5 @@ The private API is documented in [docs/grok-bot-api.md](docs/grok-bot-api.md).
 ## Deploy
 
 ```bash
-pnpm run deploy     # build, then wrangler deploy (static assets + Worker)
+pnpm run deploy     # build, then wrangler deploy to https://grokhouse.dev
 ```
